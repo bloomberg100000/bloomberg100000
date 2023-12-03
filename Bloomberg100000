@@ -1,0 +1,62 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class CalculadoraBoletos {
+
+	public static void main(String[] args) {
+		
+		
+		
+		//Crear la interfaz grafica
+		JFrame frame = new JFrame("CineITAM");
+		frame.setSize(300, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS));
+		
+		//Crear y anadir los componentes a la ventana
+		JTextField boletosAdultoTextField = new JTextField();
+		JTextField boletosNinoTextField = new JTextField();
+		String[] clasificaciones = {"A","B","C"};
+		JComboBox<String> clasificacionComboBox = new JComboBox<>(clasificaciones);
+		JButton calcularButton = new JButton("Calcular");
+		JLabel resultadoLabel = new JLabel("Costo total: ");
+		
+		frame.add(new JLabel("Boletos Adulto:"));
+		frame.add(boletosAdultoTextField);
+		frame.add(new JLabel("Boletos Nino:"));
+		frame.add(boletosNinoTextField);
+		frame.add(new JLabel("Clasificacion:"));
+		frame.add(clasificacionComboBox);
+		frame.add(calcularButton);
+		frame.add(resultadoLabel);
+		
+		
+		
+		//Anade la funcion al boton
+		calcularButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int boletosAdulto = Integer.parseInt(boletosAdultoTextField.getText());
+					int boletosNino = Integer.parseInt(boletosNinoTextField.getText());
+					String clasificacion = (String) clasificacionComboBox.getSelectedItem();
+					int costo = calcularCostoBoletos(boletosAdulto, boletosNino, clasificacion);
+					resultadoLabel.setText("Costo total: " +costo);
+				} catch (NumberFormatException ex) {
+					resultadoLabel.setText("Por favor ingrese numeros validos");
+				}
+			}
+		});
+	
+
+	}
+
+}
